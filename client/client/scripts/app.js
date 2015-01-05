@@ -150,4 +150,4 @@ app.t.layout=function(){
 };
 
 //Zhu Li, do the thing
-app.c.init();
+$(document).ready(app.c.init);
