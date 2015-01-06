@@ -1,6 +1,7 @@
 /* Import node's http module: */
+GLOBAL.mem=[];
 var http = require("http");
-var handleRequest=require("./request-handler.js").requestHandler;
+var handleRequest = require("./request-handler.js");
 
 // Every server needs to listen on a port with a unique number. The
 // standard port for HTTP servers is port 80, but that port is
@@ -22,10 +23,11 @@ var ip =process.env.IP || "127.0.0.1";
 // incoming requests.
 //
 // After creating the server, we will tell it to listen on the given port and IP. */
-var server = http.createServer(handleRequest);
+var server = http.createServer(handleRequest.requestHandler);
 console.log("Listening on http://" + ip + ":" + port);
 //i have to do the process.env.PORT and IP thing because of c9
 server.listen(port,ip);
+
 
 // To start this server, run:
 //

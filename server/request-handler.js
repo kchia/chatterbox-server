@@ -11,8 +11,10 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
+exports.mem = [];
 
 exports.requestHandler = function(request, response) {
+  var mem = GLOBAL.mem || [];
   // Request and Response come from node's http module.
   //
   // They include information about both the incoming request, such as
@@ -27,8 +29,8 @@ exports.requestHandler = function(request, response) {
   // Adding more logging to your server can be an easy way to get passive
   // debugging help, but you should always be careful about leaving stray
   // console.logs in your code.
+  console.log(typeof request.method);
   console.log("Serving request type " + request.method + " for url " + request.url);
-
   // The outgoing status.
   var statusCode = 200;
 
@@ -52,11 +54,23 @@ exports.requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  var json={results:[],bingo:100};
-  json.results.push({objectId:102,text:"Hi",roomname:"lobby",username:"Hou and Luke"});
-  json=JSON.stringify(json);
-
+  //
+  var json={results:mem,bingo:100};
+  if (request.method === 'GET'){
+    console.log(json.results);
+    mem.push({objectId:102,text:"Hi",roomname:"lobby",username:"Hou and Luke"});
+  } else if (request.method === 'POST'){
+    mem.push({objectId:102,text:"Hi",roomname:"lobby",username:"Hou and Luke"});
+    mem.push({objectId:12,text:"Hi",roomname:"lobby",username:"Hou and Luke"});
+    console.log(mem);
+    // Figure out Object IDs
+  }
+  console.log(mem);
+  json = JSON.stringify(json);
+  console.log(json);
   response.end(json);
+
+
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
