@@ -53,6 +53,7 @@ exports.requestHandler = function(request, response) {
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
   var json={results:[],bingo:100};
+  json.results.push({objectId:102,text:"Hi",roomname:"lobby",username:"Hou and Luke"});
   json=JSON.stringify(json);
 
   response.end(json);
