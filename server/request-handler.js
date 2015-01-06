@@ -52,9 +52,9 @@ exports.requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  var json={a:10,b:"fnoe"};
+  var json={results:[],bingo:100};
   json=JSON.stringify(json);
-  
+
   response.end(json);
 };
 

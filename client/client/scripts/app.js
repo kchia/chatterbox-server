@@ -17,7 +17,8 @@ app.c.init=function(){
 
 app.c.getMessages=function(){
   var url='https://api.parse.com/1/classes/chatterbox';
-    
+  url="http://127.0.0.1:3000/";
+
   $.ajax({
       // always use this url
       url: url,
@@ -43,14 +44,15 @@ app.c.getMessages=function(){
 
 app.c.postMessage=function(messageText){
   var url='https://api.parse.com/1/classes/chatterbox';
+  url = "http://127.0.0.1:3000/"
   var message= {
     'username': 'luke',
     'text': messageText,
     'roomname': '4Chan'
   };
-  
+
   console.log(message);
-  
+
   $.ajax({
       // always use this url
       url: url,
@@ -97,7 +99,7 @@ app.v.clickListen=function(selector,callback){
     var args=_.rest(arguments,2);
     $("body").on("click",selector,function(){callback.apply(null,args);});
     this.clickListen.mem[key]=true;
-  }  
+  }
 };
 
 app.v.clickListen.mem={};
@@ -123,12 +125,12 @@ app.t.messages=function(messages){
 };
 
 app.t.inputArea=function(){
-  
+
   app.v.clickListen("div#input-area input[type=button]",function(){
     var text=$("div#input-area input[type=text]").val();
     app.c.postMessage(text);
   });
-  
+
   var d="";
   d+="<div id='input-area'>";
     d+="<input type='text' placeholder='your message here'></input>";
