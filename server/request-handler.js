@@ -57,18 +57,29 @@ exports.requestHandler = function(request, response) {
   //
   var json={results:mem,bingo:100};
   if (request.method === 'GET'){
-    console.log(json.results);
-    mem.push({objectId:102,text:"Hi",roomname:"lobby",username:"Hou and Luke"});
+    //mem.push({objectId:102,text:"Hi",roomname:"lobby",username:"Hou and Luke"});
+    json = JSON.stringify(json);
+    response.end(json);
   } else if (request.method === 'POST'){
-    mem.push({objectId:102,text:"Hi",roomname:"lobby",username:"Hou and Luke"});
-    mem.push({objectId:12,text:"Hi",roomname:"lobby",username:"Hou and Luke"});
-    console.log(mem);
-    // Figure out Object IDs
+    var data = "";
+    request.on("data",function(chunk){
+      data += chunk;
+    });
+    request.on("end",function(cb){
+      console.log(data);
+      var entry = JSON.parse(data);
+      if (mem.length === 0) {
+        entry.objectId = 0;
+      } else {
+        entry.objectId = mem[mem.length-1].objectId + 1;
+      }
+      mem.push(entry);
+      //cb(JSON.parse(data) );
+    });
+  } else if (request.method === 'OPTIONS'){
+    json = JSON.stringify(json);
+    response.end(json);
   }
-  console.log(mem);
-  json = JSON.stringify(json);
-  console.log(json);
-  response.end(json);
 
 
 };
